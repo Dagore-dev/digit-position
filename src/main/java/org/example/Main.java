@@ -8,14 +8,54 @@ public class Main {
         int n1 = scanner.nextInt();
         int n2 = scanner.nextInt();
 
-        int even = getNumberWithEvenDigits(n1, n2);
-        int odd = getNumberWithOddDigits(n1, n2);
+        int even = getEvenNumbers(n1, n2);
+        int odd = getOddNumbers(n1, n2);
 
         System.out.println("Pares: " + even);
         System.out.println("Impares: " + odd);
     }
 
-    private static int getNumberWithEvenDigits(int n1, int n2) {
+    public static int getEvenNumbers(int n1, int n2) {
+        int[] n1Array = getArrayOfDigits(n1);
+        int[] n2Array = getArrayOfDigits(n2);
+        int totalOfEvenNumber = getTotalOfEvenNumbers(n1Array, n2Array);
+        int[] digits = new int[totalOfEvenNumber];
+        int count = 0;
+
+        for (int i = 0; i < n1Array.length; i++) {
+            if (n1Array[i] % 2 == 0) {
+                digits[count] = n1Array[i];
+                count++;
+            }
+            if (n2Array[i] % 2 == 0) {
+                digits[count] = n2Array[i];
+                count++;
+            }
+        }
+
+        return getNumberFromArrayOfDigits(digits);
+    }
+    public static int getOddNumbers(int n1, int n2) {
+        int[] n1Array = getArrayOfDigits(n1);
+        int[] n2Array = getArrayOfDigits(n2);
+        int totalOfOddNumbers = getTotalOfOddNumbers(n1Array, n2Array);
+        int[] digits = new int[totalOfOddNumbers];
+        int count = 0;
+
+        for (int i = 0; i < n1Array.length; i++) {
+            if (n1Array[i] % 2 != 0) {
+                digits[count] = n1Array[i];
+                count++;
+            }
+            if (n2Array[i] % 2 != 0) {
+                digits[count] = n2Array[i];
+                count++;
+            }
+        }
+
+        return getNumberFromArrayOfDigits(digits);
+    }
+    public static int getNumberWithEvenDigits(int n1, int n2) {
         int[] n1Digits = getArrayOfDigits(n1);
         int[] n2Digits = getArrayOfDigits(n2);
         int totalOfEvenNumbers = getTotalOfEvenNumbers(n1Digits, n2Digits);
@@ -39,16 +79,16 @@ public class Main {
         return getNumberFromArrayOfDigits(digits);
     }
 
-    private static int getTotalOfEvenNumbers(int[] n1, int[] n2) {
+    public static int getTotalOfEvenNumbers(int[] n1Array, int[] n2Array) {
         int count = 0;
 
-        for (int i : n1) {
+        for (int i : n1Array) {
             if (i % 2 == 0) {
                 count++;
             }
         }
 
-        for (int i : n2) {
+        for (int i : n2Array) {
             if (i % 2 == 0) {
                 count++;
             }
@@ -57,7 +97,7 @@ public class Main {
         return count;
     }
 
-    private static int getNumberWithOddDigits(int n1, int n2) {
+    public static int getNumberWithOddDigits(int n1, int n2) {
         int[] n1Digits = getArrayOfDigits(n1);
         int[] n2Digits = getArrayOfDigits(n2);
         int totalOfOddNumbers = getTotalOfOddNumbers(n1Digits, n2Digits);
@@ -81,16 +121,16 @@ public class Main {
         return getNumberFromArrayOfDigits(digits);
     }
 
-    private static int getTotalOfOddNumbers(int[] n1, int[] n2) {
+    public static int getTotalOfOddNumbers(int[] n1Array, int[] n2Array) {
         int count = 0;
 
-        for (int i : n1) {
+        for (int i : n1Array) {
             if (i % 2 != 0) {
                 count++;
             }
         }
 
-        for (int i : n2) {
+        for (int i : n2Array) {
             if (i % 2 != 0) {
                 count++;
             }

@@ -5,23 +5,111 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Dime un número: ");
-        int n = scanner.nextInt();
+        int n1 = scanner.nextInt();
+        int n2 = scanner.nextInt();
 
-        System.out.print("Dime un digito (0 - 9) del anterior número y te digo su posición: ");
-        int digitToSearch = scanner.nextInt();
+        int even = getNumberWithEvenDigits(n1, n2);
+        int odd = getNumberWithOddDigits(n1, n2);
 
-        try {
-            int position = getIndexOf(digitToSearch, n);
+        System.out.println("Pares: " + even);
+        System.out.println("Impares: " + odd);
+    }
 
-            if (position != -1) {
-                System.out.printf("La posición de %s en %s es %s.", digitToSearch, n, position);
-            } else {
-                System.out.printf("El digito %s no se encuentra en el número %s.", digitToSearch, n);
+    private static int getNumberWithEvenDigits(int n1, int n2) {
+        int[] n1Digits = getArrayOfDigits(n1);
+        int[] n2Digits = getArrayOfDigits(n2);
+        int totalOfEvenNumbers = getTotalOfEvenNumbers(n1Digits, n2Digits);
+        int[] digits = new int[totalOfEvenNumbers];
+        int count = 0;
+
+        for (int n : n1Digits) {
+            if (n % 2 == 0) {
+                digits[count] = n;
+                count++;
             }
-        } catch (IllegalArgumentException ex) {
-            System.out.println(ex.getMessage());
         }
+
+        for (int n : n2Digits) {
+            if (n % 2 == 0) {
+                digits[count] = n;
+                count++;
+            }
+        }
+
+        return getNumberFromArrayOfDigits(digits);
+    }
+
+    private static int getTotalOfEvenNumbers(int[] n1, int[] n2) {
+        int count = 0;
+
+        for (int i : n1) {
+            if (i % 2 == 0) {
+                count++;
+            }
+        }
+
+        for (int i : n2) {
+            if (i % 2 == 0) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    private static int getNumberWithOddDigits(int n1, int n2) {
+        int[] n1Digits = getArrayOfDigits(n1);
+        int[] n2Digits = getArrayOfDigits(n2);
+        int totalOfOddNumbers = getTotalOfOddNumbers(n1Digits, n2Digits);
+        int[] digits = new int[totalOfOddNumbers];
+        int count = 0;
+
+        for (int n : n1Digits) {
+            if (n % 2 != 0) {
+                digits[count] = n;
+                count++;
+            }
+        }
+
+        for (int n : n2Digits) {
+            if (n % 2 != 0) {
+                digits[count] = n;
+                count++;
+            }
+        }
+
+        return getNumberFromArrayOfDigits(digits);
+    }
+
+    private static int getTotalOfOddNumbers(int[] n1, int[] n2) {
+        int count = 0;
+
+        for (int i : n1) {
+            if (i % 2 != 0) {
+                count++;
+            }
+        }
+
+        for (int i : n2) {
+            if (i % 2 != 0) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    public static int getNumberFromArrayOfDigits (int[] nArray) {
+        int length = nArray.length;
+        int position = (int) (Math.pow(10, length) / 10);
+        int result = 0;
+
+        for (int n : nArray) {
+            result += (n * position);
+            position /= 10;
+        }
+
+        return result;
     }
     public static int getNumberOfDigits (int n) {
         if (n != 0){
@@ -37,6 +125,10 @@ public class Main {
         } else {
             return 1;
         }
+    }
+    public static int[] getArrayOfDigits (int n) {
+        int[] reverse = getReversedArrayOfDigits(n);
+        return reverseIntArray(reverse);
     }
     public static int[] getReversedArrayOfDigits(int n) {
         int digits = getNumberOfDigits(n);
